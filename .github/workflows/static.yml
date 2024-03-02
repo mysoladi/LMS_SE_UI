@@ -1,21 +1,30 @@
-
-name: Deploy new build to gh-pages for activation.
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          token: ${{ secrets.GH_PAGES }}
-          node-version: '20.x'
-      - run: git config --global user.email "goinesjalen@gmail.com"
-      - run: git config --global user.name "goinesjalen"
-      - run: npm run deploy
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx gh-pages -d build -u "mysoladi"
