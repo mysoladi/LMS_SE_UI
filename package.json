@@ -1,5 +1,6 @@
 {
   "name": "edunexa-ui",
+  "homepage": "https://github.com/mysoladi/LMS_SE_UI",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
     "django": "^1.0.0",
+    "gh-pages": "^6.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
@@ -34,9 +36,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm install react-scripts & npm install gh-pages & npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
+    "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
