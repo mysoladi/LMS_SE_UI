@@ -10,19 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Set Git email
-        run: git config user.email "mysoladine@gmail.com"
-
-      - name: Build and deploy
-        run: npm run deploy
+    - name: Deploy with gh-pages
+      run: |
+        git remote set-url origin https://github.com/mysoladi/LMS_SE_UI.git
+        npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
