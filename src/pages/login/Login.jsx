@@ -38,7 +38,7 @@ function Login() {
     }
 
     axios
-      .post("http://127.0.0.1:8000/login/", {
+      .post("https://edunexa.onrender.com/login/", {
         username: username,
         password: password,
       })
