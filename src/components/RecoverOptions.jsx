@@ -53,7 +53,7 @@ function RecoverOptions() {
 
   const handleSecurityRecovery = () => {
     axios
-    .post('http://127.0.0.1:8000/recover-password/', {
+    .post('https://edunexa.onrender.com/recover-password/', {
       'email': email,
       'security_answer': securityAnswer
     })
@@ -72,7 +72,7 @@ function RecoverOptions() {
     console.log("hello");
     console.log(email);
     axios
-    .post('http://127.0.0.1:8000/email-password/', {
+    .post('https://edunexa.onrender.com/email-password/', {
       'email': email,
     })
     .then((response) => {
