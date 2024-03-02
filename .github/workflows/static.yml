@@ -10,21 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '14'  # Adjust the Node.js version if needed
 
-      - name: Install dependencies
-        run: npm install
+      - name: Configure Git user identity
+        run: |
+          git config --global user.name "mysoladi"
+          git config --global user.email "mysoladine@gmail.com"
 
-      - name: Build
-        run: npm run build
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
 
-      - name: Deploy
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Deploy to GitHub Pages
         run: npx gh-pages -d build -u "mysoladine@gmail.com"
