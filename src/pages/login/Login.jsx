@@ -43,7 +43,7 @@ function Login() {
         password: password,
       })
       .then((response) => {
-        let { access_token } = response.data["access"];
+        // let { access_token } = response.data["access"];
       })
       .catch((error) => {
         alert("Incorrect credentials");
