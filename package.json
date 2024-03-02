@@ -37,7 +37,7 @@
   },
   "scripts": {
     "predeploy": "npm install react-scripts & npm install gh-pages & npm run build",
-    "deploy": "git config --global user.email \"goinesjalen@gmail.com\" & git config --global user.name \"goinesjalen\" & gh-pages -d build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "build": "react-scripts build",
