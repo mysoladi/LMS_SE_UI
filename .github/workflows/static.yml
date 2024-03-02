@@ -27,4 +27,4 @@ jobs:
       - name: Deploy
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx gh-pages -d build -u "mysoladi"
+        run: npx gh-pages -d build -u "mysoladine@gmail.com"
