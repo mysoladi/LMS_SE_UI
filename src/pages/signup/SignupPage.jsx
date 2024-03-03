@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import  "./SignupPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
 
 function SignupPage() {
@@ -13,7 +13,7 @@ function SignupPage() {
   const [email,setEmail] = useState("");
   const [securityQuestion, setSecurityQuestion] = useState("");
   const [error, setError] = useState("");
-
+  const navigate =useNavigate();
 
   const handleSignup = () => {
     setError(""); 
@@ -56,8 +56,9 @@ function SignupPage() {
         sec_answer: securityQuestion.toString(), 
       })
       .then((response) => {
-        if (response.data.msg === "user created") {
+        if (response.status === 201) {
           setAccountCreated(true)
+          navigate('/login')
         }
         if (response.status !== 200){
           console.log(response.status.toString)

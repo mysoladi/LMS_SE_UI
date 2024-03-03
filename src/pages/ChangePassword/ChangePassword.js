@@ -42,8 +42,8 @@ function ChangePassword() {
       password: password
     })
     .then((response) => {
-      let {msg} = response.data
-      if (msg === "reset successful") {
+      let msg = response.data
+      if (msg.message === "reset successful") {
         window.location.assign("http://localhost:3002/login/")
       }
     })
