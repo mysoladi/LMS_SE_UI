@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 /node_modules
+node_modules
+=======
+node_modules/
+.cache/
+>>>>>>> 5b29fbc22c97a1473edf0b367e06b0d922ea0c4b
 node_modules
