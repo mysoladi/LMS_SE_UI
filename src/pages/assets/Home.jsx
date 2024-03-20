@@ -1,16 +1,10 @@
 import {
     Box,
     Grid,
-    Card,
-    CardActionArea,
-    CardMedia,
-    CardContent,
-    Typography
 } from "@mui/material";
 import CalendarStud from "./CalendarStud";
 import AssignmentsTable from "./AssignmentsTable";
 import AnnouncementsTable from "./AnnouncementsTable";
-import {text} from "@fortawesome/fontawesome-svg-core";
 // import CoursesPage from "./CoursesPage";
 
 

@@ -38,12 +38,12 @@ function Login() {
     }
 
     axios
-      .post("https://edunexa.onrender.com/login/", {
+      .post("http://127.0.0.1:8000/login/", {
         username: username,
         password: password,
       })
       .then((response) => {
-        // let { access_token } = response.data["access"];
+        let { access_token } = response.data["access"];
       })
       .catch((error) => {
         alert("Incorrect credentials");

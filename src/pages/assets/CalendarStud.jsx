@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
+
 import Calendar from "react-calendar";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
+import {makeStyles} from "@mui/material";
+import {styled} from "@mui/system";
 
 var baseUrl = "https://edusphere.vercel.app"
 // var baseUrl = "http://127.0.0.1:8000"
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = styled('div')(({ theme }) => ({
     calendar: {
         borderWidth: `0 !important`,
 

@@ -7,10 +7,10 @@ import {
     TableHead,
     TableRow,
     Paper,
-    Typography,
-    withStyles
-} from "@material-ui/core";
+    // Typography,
+} from "@mui/material";
 import Box from '@mui/material/Box'
+import {styled} from "@mui/system";
 
 
 const styles = (theme) => ({
@@ -84,4 +84,4 @@ const AssignmentsTable = ({ classes }) => {
     );
 };
 
-export default withStyles(styles)(AssignmentsTable);
+export default styled(styles)(AssignmentsTable);

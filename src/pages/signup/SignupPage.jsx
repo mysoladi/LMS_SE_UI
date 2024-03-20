@@ -47,7 +47,7 @@ function SignupPage() {
     }
 
     axios
-      .post("https://edunexa.onrender.com/user/", {
+      .post("http://127.0.0.1:8000/user/", {
         email: email.toString(),
         first_name: firstName.toString(),
         last_name: lastName.toString(),
