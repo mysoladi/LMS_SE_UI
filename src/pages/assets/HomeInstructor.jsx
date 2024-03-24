@@ -14,7 +14,7 @@ import {text} from "@fortawesome/fontawesome-svg-core";
 // import CoursesPage from "./CoursesPage";
 
 
-export default function DashboardHome() {
+export default function DashboardHomeInstructor() {
 
     return (
         <Box sx={{marginLeft:2}}>
@@ -26,16 +26,7 @@ export default function DashboardHome() {
                     <div style={{textAlign:"left"}}>
                         <span className='heading'>Welcome to EduNexa</span>
                     </div>
-                    <Grid item xs={12} md={6}>
-                        <AssignmentsTable />
-                    </Grid>
-                    <Grid item xs={12} md={6} sx={{marginRight:0}} marginRight={0}  >
-                        <AnnouncementsTable />
-                    </Grid>
-                    <Grid item xs={12} md={6} sx={{marginLeft:2}}>
-                        <CalendarStud />
-                    </Grid>
-
+                    
         </Box>
     );
 }

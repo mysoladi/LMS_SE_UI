@@ -102,7 +102,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 
-export default function Dashboard(props) {
+export default function DashboardInstructor(props) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -141,7 +141,7 @@ export default function Dashboard(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const access_ele = { "Dashboard": '/', "Home": '/', "My Courses": '/mycourses', "Browse Courses": '/coursebrowse', "Profile": '/profile', "Chat": '/chat' }
+    const access_ele = { "Dashboard": '/', "Home": '/', "My Courses": '/mycourses', "Create Courses": '/createcourse', "Profile": '/profile', "Chat": '/chat' }
     useEffect(() => {
         // This function will run every time the location changes
     }, [location.pathname]);
@@ -246,7 +246,7 @@ export default function Dashboard(props) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {["Home", "My Courses", "Browse Courses", "Chat"].map(
+                    {["Home", "My Courses", "Create Course", "Chat"].map(
                         (text, index) => (
                             <ListItem
                                 key={text}
@@ -294,3 +294,4 @@ export default function Dashboard(props) {
 
     );
 }
+
