@@ -7,6 +7,9 @@ import HomePage from './pages/HomePage/HomePage';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import Dashboard from './pages/Dashboard/dashboard';
 import DashboardHome from './pages/assets/Home'
+import AdminCourseApproval from './pages/AdminCourseApproval/CourseApproval';
+import CourseForm from './pages/InstructorAddCourse/InstructorAddCourse.jsx';
+import CourseFormDemo from './pages/InstructorAddCourse/InstructorAddCourseDemo';
 
 import Assignment from './pages/Assignments/assignments';
 function App() {
@@ -19,6 +22,10 @@ function App() {
           <Route exact path='/login' element={<Login/>}/>
           <Route exact path='/forgot-password' element={<ForgotPasswordPage/>}/>
           <Route path = "/resetpassword" element = {<ChangePassword />} />
+          <Route path="/courseformdemo" element={<CourseFormDemo />} /> 
+          <Route path='/courseform' element={<CourseForm />} /> {/* For adding a new course */}
+          <Route path='/courseform/:courseId' element={<CourseForm />} /> {/* For updating an existing course */}
+          <Route path='/courseapproval' element={<AdminCourseApproval />}/>
           <Route path={'/dashboard/*'} element={<Dashboard>
             <Routes>
               <Route index element={<DashboardHome/>}></Route>
