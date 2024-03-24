@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from 'jwt-decode';
+import {GoogleLoginButton} from "../../components/GoogleLoginButton";
+import {useDispatch} from "react-redux";
 import "./Login.css";
 
 function Login() {
+  const dispatch = useDispatch();
+
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -125,7 +129,6 @@ function Login() {
   }
 
 
-
   return (
     <div className="login-page">
       <div className="login-form">
@@ -173,6 +176,7 @@ function Login() {
             Sign up
           </Link>
         </p>
+        <GoogleLoginButton/>
       </div>
     </div>
   );
