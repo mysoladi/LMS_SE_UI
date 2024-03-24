@@ -133,15 +133,13 @@ export default function DashboardAdmin(props) {
     // };
 
 
-
-
     var userFullName = localStorage.getItem("username");
     var name = userFullName || "User";
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const access_ele = { "Dashboard": '/', "Home": '/', "Course approval portal": '/courseapprove', "Profile": '/profile'}
+    const access_ele = { "Dashboard": '/', "Home": '/', "Course approval portal": '/courseapproval', "Profile": '/profile'}
     useEffect(() => {
         // This function will run every time the location changes
     }, [location.pathname]);

@@ -45,7 +45,6 @@ function Login() {
     function setUserData(userData) {
       // Set user data to local storage
       localStorage.setItem('userData', JSON.stringify(userData));
-  
       // Set additional fields to local storage
       localStorage.setItem('email', userData.email);
       localStorage.setItem('first_name', userData.first_name);
@@ -78,13 +77,13 @@ function Login() {
           // Call the function to fetch user data and set it to local storage
           fetchUserData(token);
 
-          if (userRole === "Student") {
+          if (userRole == "Student") {
             navigate("/dashboard");
           }
-          else if (userRole === "Instructor"){
+          else if (userRole == "Instructor"){
             navigate("/dashboardInstructor");
           }
-          else if (userRole === "Admin"){
+          else if (userRole == "Admin"){
             navigate("/dashboardAdmin");
           }
           
@@ -98,7 +97,7 @@ function Login() {
       });
 
     // Function to fetch user data and set it to local storage
-    function fetchUserData(token) {
+    async function fetchUserData(token) {
       axios.interceptors.request.use(
         (config) => {
           if (token) {
@@ -113,11 +112,10 @@ function Login() {
       );
       const storedUserId = localStorage.getItem("userId");
       console.log(storedUserId);
-      console.log(token);
       if (storedUserId) {
         try {
           const url = `https://edunexa.onrender.com/users/?user_id=${storedUserId}`;
-          const result = axios.get(url);
+          const result = await axios.get(url);
           setUserData(result.data); // Assuming response.data contains user data
         } catch (error) {
           console.log("Error fetching user data:", error);
@@ -126,7 +124,6 @@ function Login() {
     }
   }
 
-  console.log(userRole);
 
 
   return (
