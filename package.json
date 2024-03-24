@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.12",
@@ -12,6 +13,7 @@
     "@mui/material": "^5.15.14",
     "@mui/system": "^5.15.14",
     "@mui/x-date-pickers": "^6.19.7",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^1.9.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -21,6 +23,7 @@
     "dayjs": "^1.11.10",
     "django": "^1.0.0",
     "gh-pages": "^6.1.1",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-calendar": "^4.8.0",
     "react-dom": "^18.2.0",

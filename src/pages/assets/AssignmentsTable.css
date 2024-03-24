@@ -1,0 +1,7 @@
+.tableContainer{
+    max-height: 330px;
+}
+.tableHeaderCell{
+    background-color: #D7DBDD ;
+    font-weight: bold;
+}

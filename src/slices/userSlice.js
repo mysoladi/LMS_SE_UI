@@ -6,10 +6,14 @@ export const userSlice = createSlice({
     isLoggedIn: !!localStorage.getItem("edunexa_token"),
     token: localStorage.getItem("edunexa_token"),
     userInfo: {
-      id: '',
-      firstName: '',
-      lastName: '',
-      role: '',
+      id:'',
+      email:'',
+      password:'',
+      firstName:'',
+      lastName:'',
+      sec_answer:'',
+      user_role:'',
+      username:''
     },
   },
   reducers: {
@@ -21,11 +25,15 @@ export const userSlice = createSlice({
       localStorage.setItem("edunexa_token", action.payload)
     },
     setUserInfo: (state, action) => {
-      let {id, firstName, lastName, role} = action.payload
+      console.log(action.payload)
+      let {id, email,password,first_name, last_name, sec_answer,user_role,username} = action.payload
+
       state.userInfo.id = id
-      state.userInfo.firstName = firstName
-      state.userInfo.lastName = lastName
-      state.userInfo.role = role
+      state.userInfo.firstName = first_name
+      state.userInfo.lastName = last_name
+      state.userInfo.username = username
+      state.userInfo.user_role = user_role
+      localStorage.setItem('userFullName',first_name)
     }
   },
 })

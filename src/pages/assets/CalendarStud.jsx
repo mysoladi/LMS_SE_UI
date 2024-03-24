@@ -4,14 +4,16 @@ import Calendar from "react-calendar";
 // import { makeStyles } from "@material-ui/core/styles";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
-import {makeStyles} from "@mui/material";
+import {createTheme, ThemeProvider} from "@mui/system";
 import {styled} from "@mui/system";
+import {makeStyles} from "@mui/material";
+import useClasses from "../../useClasses";
 
 var baseUrl = "https://edusphere.vercel.app"
 // var baseUrl = "http://127.0.0.1:8000"
 
-
-const useStyles = styled('div')(({ theme }) => ({
+const theme = createTheme();
+const styles = ( theme ) => ({
     calendar: {
         borderWidth: `0 !important`,
 
@@ -54,10 +56,10 @@ const useStyles = styled('div')(({ theme }) => ({
             }
         }
     }
-}));
+});
 
 export default function CalendarStud() {
-    const classes = useStyles();
+    const classes = useClasses(styles);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [assignments, setAssignments] = useState([]);
     const [announcements, setAnnouncements] = useState([]);
@@ -130,64 +132,66 @@ export default function CalendarStud() {
 
     return (
         <>
-            <h2>Calendar</h2>
-            <Calendar className={classes.calendar} onClickDay={handleDateClick} />
-            <div>
-                <h2>Assignments</h2>
-                {assignments.length === 0 ? (
-                    <p>No assignments due on {selectedDate.toLocaleDateString()}</p>
-                ) : (
-                    <ul>
-                        <table style={{ borderCollapse: "collapse", width: "100%" }}>
-                            <thead>
-                            <tr style={{ backgroundColor: "#f7f7f7" }}>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Course Name</th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Assignment Title</th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Due Date</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {assignments.map((a) => (
-
-                                <tr>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.courseName}</td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.assignmentTitle}</td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.dueDate}</td>
+            <ThemeProvider theme={theme}>
+                <h2>Calendar</h2>
+                <Calendar className={classes.calendar} onClickDay={handleDateClick} />
+                <div>
+                    <h2>Assignments</h2>
+                    {assignments.length === 0 ? (
+                        <p>No assignments due on {selectedDate.toLocaleDateString()}</p>
+                    ) : (
+                        <ul>
+                            <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                                <thead>
+                                <tr style={{ backgroundColor: "#f7f7f7" }}>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px" }}>Course Name</th>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px" }}>Assignment Title</th>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px" }}>Due Date</th>
                                 </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                    </ul>
-                )}
-            </div>
-            <div>
-                <h2>Announcements</h2>
-                {announcements.length === 0 ? (
-                    <p>No announcements on {selectedDate.toLocaleDateString()}</p>
-                ) : (
-                    <ul>
-                        <table style={{ borderCollapse: "collapse", width: "100%" }}>
-                            <thead>
-                            <tr style={{ backgroundColor: "#f7f7f7" }}>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Course Name</th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Announcement Title</th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Date</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {announcements.map((a) => (
+                                </thead>
+                                <tbody>
+                                {assignments.map((a) => (
 
-                                <tr>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.courseName}</td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.announcementTitle}</td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.dateCreated}</td>
+                                    <tr>
+                                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.courseName}</td>
+                                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.assignmentTitle}</td>
+                                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.dueDate}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </ul>
+                    )}
+                </div>
+                <div>
+                    <h2>Announcements</h2>
+                    {announcements.length === 0 ? (
+                        <p>No announcements on {selectedDate.toLocaleDateString()}</p>
+                    ) : (
+                        <ul>
+                            <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                                <thead>
+                                <tr style={{ backgroundColor: "#f7f7f7" }}>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px" }}>Course Name</th>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px" }}>Announcement Title</th>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px" }}>Date</th>
                                 </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                    </ul>
-                )}
-            </div>
+                                </thead>
+                                <tbody>
+                                {announcements.map((a) => (
+
+                                    <tr>
+                                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.courseName}</td>
+                                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.announcementTitle}</td>
+                                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{a.dateCreated}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </ul>
+                    )}
+                </div>
+            </ThemeProvider>
         </>
     );
 }
