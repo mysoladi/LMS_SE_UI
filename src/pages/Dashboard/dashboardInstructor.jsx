@@ -141,15 +141,18 @@ export default function DashboardInstructor(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const access_ele = { "Dashboard": '/', "Home": '/', "My Courses": '/mycourses', "Create Courses": '/createcourse', "Profile": '/profile', "Chat": '/chat' }
+    const access_ele = { "Dashboard": '/', "Home": '/', "My Courses": '/mycourses', "Create Course": '/courseform/', "Profile": '/profile', "Chat": '/chat' }
     useEffect(() => {
         // This function will run every time the location changes
     }, [location.pathname]);
 
-    // const history = useHistory();
     const handleselection = (text) => {
-        const basePath = location.pathname.split('/')[0];
-        navigate(basePath + '/dashboard' + access_ele[text]);
+        if (text === "Create Course") {
+            navigate('/dashboardInstructor/courseform/');
+        } else {
+            const basePath = location.pathname.split('/')[0];
+            navigate(basePath + '/dashboardInstructor' + access_ele[text]);
+        }
     }
     // "#113224 !important",
     return (
