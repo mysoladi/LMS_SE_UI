@@ -37,7 +37,7 @@ function ChangePassword() {
     }
 
     axios
-    .put('https://edunexa.onrender.com/change-password/', {
+    .put('http://127.0.0.1:8000/change-password/', {
       email: email,
       password: password
     })

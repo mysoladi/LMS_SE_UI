@@ -7,21 +7,21 @@ import {
     TableHead,
     TableRow,
     Paper,
-    Typography,
-    withStyles
-} from "@material-ui/core";
+    // Typography,
+} from "@mui/material";
 import Box from '@mui/material/Box'
+import {styled} from "@mui/system";
 
 
-const styles = (theme) => ({
-    tableContainer: {
-        maxHeight: 330
-    },
-    tableHeaderCell: {
-        backgroundColor: "#D7DBDD ",
-        fontWeight: "bold"
-    }
-});
+// const styles = (theme) => ({
+//     tableContainer: {
+//         maxHeight: 330
+//     },
+//     tableHeaderCell: {
+//         backgroundColor: "#D7DBDD ",
+//         fontWeight: "bold"
+//     }
+// });
 
 
 // var baseUrl = "http://127.0.0.1:8000"
@@ -50,18 +50,18 @@ const AssignmentsTable = ({ classes }) => {
     return (
         <Box sx={{margin:2}}>
             <h2>Assignment</h2>
-            <TableContainer className={classes.tableContainer} component={Paper}>
+            <TableContainer className='tableContainer' component={Paper}>
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.tableHeaderCell}>Course</TableCell>
-                            <TableCell className={classes.tableHeaderCell}>
+                            <TableCell className='tableHeaderCell'>Course</TableCell>
+                            <TableCell className='tableHeaderCell'>
                                 Assignment
                             </TableCell>
-                            <TableCell className={classes.tableHeaderCell}>
+                            <TableCell className='tableHeaderCell'>
                                 Due Date
                             </TableCell>
-                            <TableCell className={classes.tableHeaderCell}>
+                            <TableCell className='tableHeaderCell'>
                                 Instructor
                             </TableCell>
                         </TableRow>
@@ -84,4 +84,4 @@ const AssignmentsTable = ({ classes }) => {
     );
 };
 
-export default withStyles(styles)(AssignmentsTable);
+export default AssignmentsTable;

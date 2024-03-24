@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import '../CreateAssignment/createassignments.css';
-import TextField  from '@material-ui/core/TextField';
+import { TextField } from '@mui/material';
 import {Editor} from '@tinymce/tinymce-react'
-import DOMPurify from 'dompurify';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -10,13 +9,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input';
-import { useParams } from "react-router-dom";
 import { useRef } from 'react';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import CircularProgress from '@mui/material/CircularProgress';
 
 var baseUrl = "https://edusphere.vercel.app"
 

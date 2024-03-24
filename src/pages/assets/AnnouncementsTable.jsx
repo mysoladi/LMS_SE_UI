@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from "react";
+// import {
+//     Table,
+//     TableBody,
+//     TableCell,
+//     TableContainer,
+//     TableHead,
+//     TableRow,
+//     Typography,
+//     Paper,
+//     IconButton,
+//     Collapse
+// } from "@mui/core";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import {
+    Collapse,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    Typography,
-    Paper,
-    IconButton,
-    Collapse
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+    Typography
+} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import {styled} from "@mui/system";
 
-const useStyles = makeStyles({
+const useStyles = styled({
     root: {
         width: "100%"
     },

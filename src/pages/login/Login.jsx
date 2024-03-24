@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import "./Login.css";
+import {GoogleLoginButton} from "../../components/GoogleLoginButton";
+import {useDispatch} from "react-redux";
+import {setLoggedIn, setToken} from "../../slices/userSlice";
 
 function Login() {
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -43,7 +48,10 @@ function Login() {
         password: password,
       })
       .then((response) => {
-        // let { access_token } = response.data["access"];
+        let { access_token } = response.data["access"];
+        dispatch(setLoggedIn(true));
+        dispatch(setToken(access_token));
+        navigate('/dashboard');
       })
       .catch((error) => {
         alert("Incorrect credentials");
@@ -97,6 +105,7 @@ function Login() {
             Sign up
           </Link>
         </p>
+        <GoogleLoginButton/>
       </div>
     </div>
   );
