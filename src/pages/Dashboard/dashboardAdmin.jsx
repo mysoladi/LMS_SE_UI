@@ -139,7 +139,7 @@ export default function DashboardAdmin(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const access_ele = { "Dashboard": '/', "Home": '/', "Course approval portal": '/courseapproval', "Profile": '/profile'}
+    const access_ele = { "Dashboard": '/', "Home": '/', "Course approval": '/courseapproval', "Profile": '/profile'}
     useEffect(() => {
         // This function will run every time the location changes
     }, [location.pathname]);
@@ -147,7 +147,7 @@ export default function DashboardAdmin(props) {
     // const history = useHistory();
     const handleselection = (text) => {
         const basePath = location.pathname.split('/')[0];
-        navigate(basePath + '/dashboard' + access_ele[text]);
+        navigate(basePath + '/dashboardAdmin' + access_ele[text]);
     }
     // "#113224 !important",
     return (

@@ -12,6 +12,8 @@ import DashboardHome from './pages/assets/Home';
 import DashboardHomeAdmin from './pages/assets/HomeAdmin'; // Adjust the path as per your project structure
 import DashboardHomeInstructor from './pages/assets/HomeInstructor'; // Adjust the path as per your project structure
 import AdminCourseApproval from './pages/AdminCourseApproval/CourseApproval';
+import CourseApprovalRejected from './pages/AdminCourseApproval/CourseApprovalRejected';
+import CourseApprovalApproved from './pages/AdminCourseApproval/CourseApprovalApprove';
 import CourseForm from './pages/InstructorAddCourse/InstructorAddCourse';
 import CourseFormDemo from './pages/InstructorAddCourse/InstructorAddCourseDemo';
 import Assignment from './pages/Assignments/assignments';
@@ -27,20 +29,27 @@ function App() {
           <Route exact path='/forgot-password' element={<ForgotPasswordPage />} />
           <Route path="/resetpassword" element={<ChangePassword />} />
 
-          <Route path="/courseformdemo" element={<CourseFormDemo />} /> 
+          <Route path="/courseformdemo" element={<CourseFormDemo />} />
           <Route path='/dashboardInstructor/courseform/' element={<CourseForm />} /> {/* For adding a new course */}
           <Route path='/courseform/:courseId' element={<CourseForm />} /> {/* For updating an existing course */}
           <Route path='dashboardAdmin/courseapproval' element={<AdminCourseApproval />} />
+          <Route path='dashboardAdmin/courseapprovalapprove' element={<CourseApprovalApproved />} />
+          <Route path='dashboardAdmin/courseapprovalreject' element={<CourseApprovalRejected />} />
+
+
+
 
           <Route path={'/dashboard/*'} element={<Dashboard>
             <Routes>
-              <Route index element={<DashboardHome/>}></Route>
+              <Route index element={<DashboardHome />}></Route>
             </Routes>
-              </Dashboard>
+          </Dashboard>
           } />
 
           <Route path='dashboardAdmin/*' element={<DashboardAdmin />}>
             <Route path='dashboardAdmin/courseapproval' element={<AdminCourseApproval />} />
+            <Route path='dashboardAdmin/courseapprovalapprove' element={<CourseApprovalApproved />} />
+            <Route path='dashboardAdmin/courseapprovalreject' element={<CourseApprovalRejected />} />
             <Route index element={<DashboardHomeAdmin />} />
           </Route>
 

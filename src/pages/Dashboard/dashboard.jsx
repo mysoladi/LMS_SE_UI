@@ -28,6 +28,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { useEffect, useState, useCallback } from "react";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate, useLocation } from 'react-router-dom';
+import ChatSend from '../../components/ChatSend';
 import axios from "axios";
 import { useCalendarState } from "@mui/x-date-pickers/internals";
 
@@ -102,13 +103,15 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 
+
+
 export default function Dashboard(props) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [activeMenu, setActiveMenu] = React.useState(0);
     const [showProfile, setShowProfile] = React.useState(false);
-    
+
 
 
     const handleMenu = (event) => {
@@ -127,10 +130,18 @@ export default function Dashboard(props) {
         setOpen(false);
     };
 
-    // const handleLogout = () => {
-    //   localStorage.clear();
-    //   window.location.href = '/';
-    // };
+    const handleLogout = () => {
+      localStorage.clear();
+      window.location.href = '/signup';
+    };
+
+    // Conditionally render ChatSend only in the /chat route
+    const renderChatSend = () => {
+        if (location.pathname === '/dashboard/chat') {
+            return <ChatSend />;
+        }
+        return null;
+    };
 
 
 
@@ -159,6 +170,7 @@ export default function Dashboard(props) {
                 backgroundColor: "#1C4E80 !important",
                 color: "#ffffff !important"
             }}>
+
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -218,7 +230,7 @@ export default function Dashboard(props) {
                             >
                                 Profile
                             </MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
@@ -287,8 +299,23 @@ export default function Dashboard(props) {
                     )}
                 </List>
             </Drawer>
-            <Box width="100%" sx={{ display: 'flexwrap', justifyContent: 'flex-start', flexGrow: 1, paddingTop: 8, width: "90vw" }}>
+            <Box
+                width="100%"
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    position: 'fixed',
+                    bottom: 50,
+                    left: 0,
+                    width: '100vw', // Adjusted to full viewport width
+                    zIndex: 1000, // Optional: Set a higher z-index if needed
+                    backgroundColor: '#fff', // Optional: Set background color if needed
+                    boxShadow: '0px -5px 5px rgba(0, 0, 0, 0.1)', // Optional: Add shadow
+                    padding: '8px 0',
+                }}
+            >
                 {props.children}
+                {renderChatSend()}
             </Box>
         </Box>
 
