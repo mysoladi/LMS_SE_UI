@@ -17,6 +17,11 @@ import CourseApprovalApproved from './pages/AdminCourseApproval/CourseApprovalAp
 import CourseForm from './pages/InstructorAddCourse/InstructorAddCourse';
 import CourseFormDemo from './pages/InstructorAddCourse/InstructorAddCourseDemo';
 import Assignment from './pages/Assignments/assignments';
+import CoursesPage from "./pages/AdminCourseApproval/CourseApproval";
+import AdminDashboard from "./pages/Dashboard/AdminDash";
+import Confirmation from "./pages/InstructorAddCourse/InstructorAddCourseConfirm";
+import AddAnnouncement from "./pages/InstructorAddCourse/AddAnnouncement";
+import AddAssignment from "./pages/InstructorAddCourse/AddAssignment";
 
 function App() {
   return (
@@ -46,16 +51,23 @@ function App() {
           </Dashboard>
           } />
 
-          <Route path='dashboardAdmin/*' element={<DashboardAdmin />}>
-            <Route path='dashboardAdmin/courseapproval' element={<AdminCourseApproval />} />
-            <Route path='dashboardAdmin/courseapprovalapprove' element={<CourseApprovalApproved />} />
-            <Route path='dashboardAdmin/courseapprovalreject' element={<CourseApprovalRejected />} />
-            <Route index element={<DashboardHomeAdmin />} />
-          </Route>
+          <Route path='dashboardAdmin/*' element={<DashboardAdmin>
+            <Routes>
+              <Route index element={<AdminDashboard/>}></Route>
+              <Route path={'/adminpanel'} element = {<CoursesPage/>}></Route>
+            </Routes>
+          </DashboardAdmin>
+          } />
 
-          <Route path='dashboardInstructor/*' element={<DashboardInstructor />}>
-            <Route index element={<DashboardHomeInstructor />} />
-          </Route>
+          <Route path='dashboardInstructor/*' element={<DashboardInstructor>
+            <Routes>
+              <Route index element={<DashboardHomeInstructor />} />
+              <Route path={'/add-announcement'} element={<AddAnnouncement/>}></Route>
+              <Route path={'/add-assignment'} element={<AddAssignment/>}></Route>
+              <Route path={'/confirmation'} element={<Confirmation/>}></Route>
+            </Routes>
+          </DashboardInstructor>
+          } />
         </Routes>
       </Router>
     </div>

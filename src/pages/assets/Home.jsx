@@ -3,6 +3,7 @@ import { Box, Grid } from '@mui/material';
 import CalendarStud from './CalendarStud';
 import AssignmentsTable from './AssignmentsTable';
 import AnnouncementsTable from './AnnouncementsTable';
+import MyCourses from "../../components/MyCourses";
 // Import CoursesPage if needed
 
 export default function DashboardHome() {
@@ -20,15 +21,19 @@ export default function DashboardHome() {
           </div>
         </Grid>
         {/* Grid items for tables and calendar */}
-        <Grid item xs={12} md={6}>
-          <AssignmentsTable />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <AnnouncementsTable />
-        </Grid>
-        <Grid item xs={12} md={6}>
+        {/*<Grid item xs={12} md={6}>*/}
+        {/*  <AssignmentsTable />*/}
+        {/*</Grid>*/}
+        {/*<Grid item xs={12} md={6}>*/}
+        {/*  <AnnouncementsTable />*/}
+        {/*</Grid>*/}
+        <Grid item xs={12} md={4}>
           <CalendarStud />
         </Grid>
+        <Grid item xs={12} md={8}>
+          <MyCourses role="student" />
+        </Grid>
+
       </Grid>
     </Box>
   );

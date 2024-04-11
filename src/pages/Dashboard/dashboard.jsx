@@ -132,7 +132,7 @@ export default function Dashboard(props) {
 
     const handleLogout = () => {
       localStorage.clear();
-      window.location.href = '/signup';
+      navigate('/login');
     };
 
     // Conditionally render ChatSend only in the /chat route
@@ -258,7 +258,7 @@ export default function Dashboard(props) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {["Home", "My Courses", "Browse Courses", "Chat"].map(
+                    {["Home",  "Browse Courses", "Chat"].map(
                         (text, index) => (
                             <ListItem
                                 key={text}
@@ -299,23 +299,26 @@ export default function Dashboard(props) {
                     )}
                 </List>
             </Drawer>
-            <Box
-                width="100%"
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    position: 'fixed',
-                    bottom: 50,
-                    left: 0,
-                    width: '100vw', // Adjusted to full viewport width
-                    zIndex: 1000, // Optional: Set a higher z-index if needed
-                    backgroundColor: '#fff', // Optional: Set background color if needed
-                    boxShadow: '0px -5px 5px rgba(0, 0, 0, 0.1)', // Optional: Add shadow
-                    padding: '8px 0',
-                }}
-            >
+            {/*<Box*/}
+            {/*    width="100%"*/}
+            {/*    sx={{*/}
+            {/*        display: 'flex',*/}
+            {/*        justifyContent: 'center',*/}
+            {/*        position: 'fixed',*/}
+            {/*        bottom: 185,*/}
+            {/*        left: 0,*/}
+            {/*        width: '100vw', // Adjusted to full viewport width*/}
+            {/*        zIndex: 1000, // Optional: Set a higher z-index if needed*/}
+            {/*        backgroundColor: '#fff', // Optional: Set background color if needed*/}
+            {/*        boxShadow: '0px -5px 5px rgba(0, 0, 0, 0.1)', // Optional: Add shadow*/}
+            {/*        padding: '0 0',*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    {props.children}*/}
+            {/*    {renderChatSend()}*/}
+            {/*</Box>*/}
+            <Box width="100%" sx={{ display: 'flexwrap', justifyContent: 'flex-start', flexGrow: 1, paddingTop: 8, width: "90vw" }}>
                 {props.children}
-                {renderChatSend()}
             </Box>
         </Box>
 
