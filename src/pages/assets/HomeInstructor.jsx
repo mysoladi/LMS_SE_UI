@@ -1,32 +1,56 @@
+// Importing necessary components from Material UI and other custom components
+import React from "react";
 import {
     Box,
     Grid,
     Card,
     CardActionArea,
-    CardMedia,
     CardContent,
-    Typography
+    Typography,
+    Paper
 } from "@mui/material";
 import CalendarStud from "./CalendarStud";
 import AssignmentsTable from "./AssignmentsTable";
 import AnnouncementsTable from "./AnnouncementsTable";
-import {text} from "@fortawesome/fontawesome-svg-core";
-// import CoursesPage from "./CoursesPage";
 
+// CoursesPage import - using the uncommented import as it seems to be the most recent change
+import CoursesPage from "../AdminCourseApproval/CourseApproval";
+import MyCourses from "../../components/MyCourses";
 
 export default function DashboardHomeInstructor() {
-
     return (
-        <Box sx={{marginLeft:2}}>
-            {/*<Grid container spacing={2} >*/}
-            {/*    <Grid container spacing={2} sx={{ maxWidth: 2000, mt: 0 }}>*/}
-            {/*        <CoursesPage />*/}
-            {/*    </Grid>*/}
-            {/*    <Grid container marginLeft={2}>*/}
-                    <div style={{textAlign:"left"}}>
-                        <span className='heading'>Welcome to EduNexa</span>
-                    </div>
-                    
+        <Box sx={{ flexGrow: 1, m: 2 }}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                        Welcome to EduNexa, Instructor
+                    </Typography>
+                </Grid>
+                {/*<Grid item xs={12} md={6} lg={4}>*/}
+                {/*    <Paper elevation={3}>*/}
+                {/*        <CalendarStud />*/}
+                {/*    </Paper>*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} md={6} lg={8}>*/}
+                {/*    <Card>*/}
+                {/*        <CardActionArea>*/}
+                {/*            <CardContent>*/}
+                {/*                <AssignmentsTable />*/}
+                {/*            </CardContent>*/}
+                {/*        </CardActionArea>*/}
+                {/*    </Card>*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} md={6} lg={4}>*/}
+                {/*    <Card>*/}
+                {/*        <CardActionArea>*/}
+                {/*            <CardContent>*/}
+                {/*                <AnnouncementsTable />*/}
+                {/*            </CardContent>*/}
+                {/*        </CardActionArea>*/}
+                {/*    </Card>*/}
+                    <MyCourses role="Instructor"/>
+                {/*</Grid>*/}
+            </Grid>
         </Box>
     );
 }

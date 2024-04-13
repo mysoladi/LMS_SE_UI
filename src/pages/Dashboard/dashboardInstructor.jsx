@@ -141,7 +141,7 @@ export default function DashboardInstructor(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const access_ele = { "Dashboard": '/', "Home": '/', "My Courses": '/mycourses', "Create Course": '/courseform/', "Profile": '/profile', "Chat": '/chat' }
+    const access_ele = { "Dashboard": '/', "Home": '/', "My Courses": '/mycourses', "Create Course": '/courseform/', "Profile": '/profile', "Chat": '/chat',"Add Announcement":"/add-announcement" }
     useEffect(() => {
         // This function will run every time the location changes
     }, [location.pathname]);
@@ -149,9 +149,10 @@ export default function DashboardInstructor(props) {
     const handleselection = (text) => {
         if (text === "Create Course") {
             navigate('/dashboardInstructor/courseform/');
-        } else {
+        }
+        else {
             const basePath = location.pathname.split('/')[0];
-            navigate(basePath + '/dashboardInstructor' + access_ele[text]);
+            navigate('/dashboardInstructor' + access_ele[text]);
         }
     }
     // "#113224 !important",
@@ -249,7 +250,7 @@ export default function DashboardInstructor(props) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {["Home", "My Courses", "Create Course", "Chat"].map(
+                    {["Home","Create Course", "Chat"].map(
                         (text, index) => (
                             <ListItem
                                 key={text}

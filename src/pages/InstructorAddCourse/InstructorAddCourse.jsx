@@ -20,7 +20,7 @@ export default function CourseForm() {
     e.preventDefault();
   
     // Retrieve user_id and user_role from local storage
-    var user_id = localStorage.getItem('userId');
+    var user_id = localStorage.getItem('id');
     var user_role = localStorage.getItem('user_role');
   
     if (!user_id || !user_role) {
@@ -33,7 +33,7 @@ export default function CourseForm() {
         params: { user_id, user_role }, // Pass user_id and user_role as query parameters
       });
       console.log('Course added successfully:', response.data);
-      navigate('/confirmation'); // Redirect to the course approval page or dashboard after submission
+      navigate('/dashboardInstructor/confirmation'); // Redirect to the course approval page or dashboard after submission
     } catch (error) {
       console.error('Error submitting course:', error);
     }

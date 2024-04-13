@@ -139,7 +139,7 @@ export default function DashboardAdmin(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const access_ele = { "Dashboard": '/', "Home": '/', "Course approval": '/courseapproval', "Profile": '/profile'}
+    const access_ele = { "Dashboard": '/', "Home": '/', "Browse Courses": '/courseapproval', "Profile": '/profile'}
     useEffect(() => {
         // This function will run every time the location changes
     }, [location.pathname]);
@@ -244,7 +244,7 @@ export default function DashboardAdmin(props) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {["Home", "Course approval", "Browse Courses", "Chat"].map(
+                    {["Home", "Browse Courses", "Chat"].map(
                         (text, index) => (
                             <ListItem
                                 key={text}
