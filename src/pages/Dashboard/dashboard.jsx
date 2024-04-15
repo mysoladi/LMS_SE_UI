@@ -24,16 +24,22 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import ChatIcon from '@mui/icons-material/Chat';
+import ChatIcon from "@mui/icons-material/Chat";
 import { useEffect, useState, useCallback } from "react";
 import { deepOrange, deepPurple } from "@mui/material/colors";
-import { useNavigate, useLocation } from 'react-router-dom';
-import ChatSend from '../../components/ChatSend';
+import { useNavigate, useLocation, useHistory } from "react-router-dom";
+import ChatSend from "../../components/ChatSend";
+import ExtendedNavbar from "../../components/ExtendedNavbar";
+import CourseBoxes from "../../components/CourseBoxes";
+import JoinedCourseBoxes from "../../components/JoinedCourseBoxes";
+import DashboardHome from "../../pages/assets/Home";
+
+
+import SecondDrawer from "../../components/SecondDashboardDrawer";
+
+
 import axios from "axios";
 import { useCalendarState } from "@mui/x-date-pickers/internals";
-
-
-
 
 const drawerWidth = 240;
 
@@ -41,21 +47,21 @@ const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen
+        duration: theme.transitions.duration.enteringScreen,
     }),
-    overflowX: "hidden"
+    overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
     transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
+        duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up("sm")]: {
-        width: `calc(${theme.spacing(8)} + 1px)`
-    }
+        width: `calc(${theme.spacing(8)} + 1px)`,
+    },
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -64,29 +70,29 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-start",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
 }));
 
 const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== "open"
+    shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
+        duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(["width", "margin"], {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen
-        })
-    })
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
 }));
 
 const Drawer = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== "open"
+    shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
@@ -94,14 +100,21 @@ const Drawer = styled(MuiDrawer, {
     boxSizing: "border-box",
     ...(open && {
         ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme)
+        "& .MuiDrawer-paper": openedMixin(theme),
     }),
     ...(!open && {
         ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme)
-    })
+        "& .MuiDrawer-paper": closedMixin(theme),
+    }),
 }));
 
+const ContentContainer = styled(Box)(({ theme }) => ({
+    flexGrow: 1,
+    p: 3,
+    pl: `calc(${theme.spacing(7)} + 1px)`, // Adjust padding-left to start after the sidebar
+    pt: `calc(${theme.mixins.toolbar.minHeight}px + 1rem)`, // Adjust top padding to start below the header
+    transition: "padding-left 0.3s ease", // Adding transition for padding-left
+}));
 
 
 
@@ -111,6 +124,7 @@ export default function Dashboard(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [activeMenu, setActiveMenu] = React.useState(0);
     const [showProfile, setShowProfile] = React.useState(false);
+    const [isSecondDrawerOpen, setIsSecondDrawerOpen] = useState(false); // Initial state set to closed
 
 
 
@@ -123,28 +137,30 @@ export default function Dashboard(props) {
     };
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setIsSecondDrawerOpen(true);
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        setIsSecondDrawerOpen(false);
     };
+
+
+
+    const handleSecondDrawerOpen = () => {
+        setIsSecondDrawerOpen(!isSecondDrawerOpen); // Toggle the state when the icon is clicked
+    };
+
+    const handleSecondDrawerClose = () => {
+        setIsSecondDrawerOpen(false);
+    };
+
+    console.log('isSecondDrawerOpen:', isSecondDrawerOpen); // Add this line for debugging
+
 
     const handleLogout = () => {
-      localStorage.clear();
-      navigate('/login');
+        localStorage.clear();
+        navigate("/login");
     };
-
-    // Conditionally render ChatSend only in the /chat route
-    const renderChatSend = () => {
-        if (location.pathname === '/dashboard/chat') {
-            return <ChatSend />;
-        }
-        return null;
-    };
-
-
-
 
     var userFullName = localStorage.getItem("username");
     var name = userFullName || "User";
@@ -152,49 +168,61 @@ export default function Dashboard(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const access_ele = { "Dashboard": '/', "Home": '/', "My Courses": '/mycourses', "Browse Courses": '/coursebrowse', "Profile": '/profile', "Chat": '/chat' }
+    const access_ele = {
+        Dashboard: "/",
+        Home: "/",
+        "My Courses": "/mycourses",
+        "Browse": "/coursebrowse",
+        Profile: "/profile",
+        Chat: "/chat",
+    };
     useEffect(() => {
         // This function will run every time the location changes
     }, [location.pathname]);
 
-    // const history = useHistory();
     const handleselection = (text) => {
-        const basePath = location.pathname.split('/')[0];
-        navigate(basePath + '/dashboard' + access_ele[text]);
-    }
-    // "#113224 !important",
-    return (
-        <Box sx={{ display: "flex", justifyContent: 'left', p: 0 }}>
-            <CssBaseline />
-            <AppBar position="fixed" open={open} sx={{
-                backgroundColor: "#1C4E80 !important",
-                color: "#ffffff !important"
-            }}>
+        const basePath = location.pathname.split("/")[0];
+        navigate(basePath + "/dashboard" + access_ele[text]);
+    };
 
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{
-                            marginRight: 5,
-                            ...(open && { display: "none" })
-                        }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+    const shouldRenderCourseBoxes = location.pathname.includes("/coursebrowse");
+
+    const shouldRenderHomeDashboard = location.pathname.includes("dashboard/coursebrowse");
+    const shouldRenderHomeDashboardbool = location.pathname.includes("dashboard/");
+
+    const shouldRenderDashboardProps = location.pathname.includes("viewcourse/");
+
+
+
+
+    return (
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+            <CssBaseline />
+            <AppBar
+                position="fixed"
+                open={open}
+                sx={{
+                    top: 0, // Start from the top of the screen
+                    backgroundColor: "#1C4E80 !important",
+                    color: "#ffffff !important",
+                    zIndex: theme.zIndex.drawer,
+                }}
+
+            >
+                <Toolbar sx={{ paddingLeft: theme.spacing(2), display: "flex", justifyContent: "space-between" }}>
+                    {/* Left-aligned content */}
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ flexGrow: 1, display: "flex", p: 0 }}
                         style={{ cursor: "pointer" }}
-                        onClick={() => handleselection('Dashboard')}
+                        onClick={() => handleselection("Dashboard")}
+                        paddingLeft={"3rem"}
                     >
                         Dashboard
                     </Typography>
-                    <div sx={{ marginRight: "0", p: 0 }}>
+                    {/* Right-aligned content */}
+                    <div sx={{ display: "flex", alignItems: "center", p: 0 }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -206,121 +234,151 @@ export default function Dashboard(props) {
                         >
                             <AccountCircle />
                         </IconButton>
+
+                        {/* Menu component */}
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorEl}
                             anchorOrigin={{
                                 vertical: "top",
-                                horizontal: "right"
+                                horizontal: "right",
                             }}
                             keepMounted
                             transformOrigin={{
                                 vertical: "top",
-                                horizontal: "right"
+                                horizontal: "right",
                             }}
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem
-                                onClick={() => handleselection('Profile')}
-                            //   setActiveMenu(3);
-                            //   setShowProfile(true);
-                            //   handleClose();
-                            // }
-                            >
+                            <MenuItem onClick={() => handleselection("Profile")}>
                                 Profile
                             </MenuItem>
                             <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
+
             </AppBar>
 
             <Drawer variant="permanent" open={open}>
-                <DrawerHeader sx={{ display: "flex", alignItems: "center" }}>
+                <DrawerHeader sx={{ alignItems: "center", flexDirection: "column" }}>
                     <Avatar
                         sx={{
                             bgcolor: deepOrange[100],
                             color: deepPurple[600],
-                            marginRight: 1
+                            marginTop: 2,
                         }}
                     >
                         {name.charAt(0).toUpperCase()}
                     </Avatar>
-                    <ListItemText primary={name} />
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === "rtl" ? (
-                            <ChevronRightIcon />
-                        ) : (
-                            <ChevronLeftIcon />
-                        )}
-                    </IconButton>
+
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemText
+                                primary={name}
+                                sx={{
+                                    paddingLeft: 0.5, // Adjust the left margin
+                                    paddingRight: 0.5, // Adjust the right margin
+                                    fontSize: "5rem",
+                                    color: "#1C4E80", // Set text color to blue
+                                }}
+                            />
+                        </ListItem>
+                    </List>
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {["Home",  "Browse Courses", "Chat"].map(
-                        (text, index) => (
-                            <ListItem
-                                key={text}
-                                disablePadding
-                                sx={{ display: "block", p: 0 }}
-                                onClick={() => handleselection(text)}
-                            // selected={activeMenu === index}
-                            // button
+                    {[
+                        { text: "Home", icon: <HomeIcon /> },
+                        { text: "Browse", icon: <AutoStoriesIcon /> },
+                    ].map((item, index) => (
+                        <ListItem
+                            key={item.text}
+                            disablePadding
+                            onClick={() => handleselection(item.text)}
+                        >
+
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 48,
+                                    justifyContent: open ? "initial" : "center",
+                                    px: 2.5,
+                                }}
                             >
-                                <ListItemButton
+                                <Divider />
+
+                                <ListItemIcon
                                     sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? "initial" : "center",
-                                        px: 2.5
+                                        minWidth: 0,
+                                        mr: open ? 3 : "auto",
+                                        justifyContent: "center",
                                     }}
                                 >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : "auto",
-                                            justifyContent: "center"
-                                        }}
-                                    >
-                                        {index === 0 ? (
-                                            <HomeIcon />
-                                        ) : index === 1 ? (
-                                            <AutoStoriesIcon />
-                                        ) : index === 2 ? (
-                                            <AddBoxOutlinedIcon />
-                                        ) : (
-                                            <ChatIcon />
-                                        )}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
-                            </ListItem>
-                        )
-                    )}
+                                    {item.icon}
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={item.text}
+                                    sx={{
+                                        fontSize: "9rem", // Adjust the font size as needed for a smaller size
+                                        fontWeight: 600, // Make the text bold
+                                        color: "#1C4E80", // Match the color of the app header
+                                        textAlign: "center",
+                                        position: "absolute",
+                                        bottom: "calc(-1.5 * 0.6rem)", // Position the text slightly above the bottom
+                                        left: "50%", // Center the text under the icon
+                                        transform: "translateX(-50%)", // Center horizontally
+                                        width: "100%", // Ensure the text takes the full width of the ListItem
+                                        whiteSpace: "nowrap", // Prevent text wrapping
+                                        overflow: "hidden", // Hide overflow if text is too long
+                                        textOverflow: "ellipsis", // Add ellipsis (...) if text overflows
+                                    }}
+
+                                />
+                            </ListItemButton>
+                        </ListItem>
+
+                    ))}
+
                 </List>
             </Drawer>
-            {/*<Box*/}
-            {/*    width="100%"*/}
-            {/*    sx={{*/}
-            {/*        display: 'flex',*/}
-            {/*        justifyContent: 'center',*/}
-            {/*        position: 'fixed',*/}
-            {/*        bottom: 185,*/}
-            {/*        left: 0,*/}
-            {/*        width: '100vw', // Adjusted to full viewport width*/}
-            {/*        zIndex: 1000, // Optional: Set a higher z-index if needed*/}
-            {/*        backgroundColor: '#fff', // Optional: Set background color if needed*/}
-            {/*        boxShadow: '0px -5px 5px rgba(0, 0, 0, 0.1)', // Optional: Add shadow*/}
-            {/*        padding: '0 0',*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    {props.children}*/}
-            {/*    {renderChatSend()}*/}
-            {/*</Box>*/}
-            <Box width="100%" sx={{ display: 'flexwrap', justifyContent: 'flex-start', flexGrow: 1, paddingTop: 8, width: "90vw" }}>
-                {props.children}
-            </Box>
-        </Box>
 
+            {
+                shouldRenderDashboardProps && (
+                    <div>
+                        <SecondDrawer isOpen={isSecondDrawerOpen} onClose={handleSecondDrawerClose} />
+                        <ExtendedNavbar handleDrawerOpen={handleSecondDrawerOpen} isSecondDrawerOpen={isSecondDrawerOpen} />
+                    </div>
+                )
+            }
+
+            <Box
+                sx={{
+                    flexGrow: 1,
+                    p: 3,
+                    pl: `5rem`, // Add left padding to start after the sidebar
+                    pt: `calc(${theme.mixins.toolbar.minHeight}px + 1rem)`, // Add top padding to start below the header
+                    overflow: "auto",
+                    // Add additional styling if needed
+                }}
+            >
+                <ContentContainer
+                    sx={{
+                        paddingLeft: isSecondDrawerOpen ? `${drawerWidth}px` : `calc(${theme.spacing(7)} + 1px)`, // Adjust padding-left based on drawer state
+                    }}
+                >
+
+                    {!shouldRenderHomeDashboard && shouldRenderHomeDashboardbool && !shouldRenderDashboardProps && <JoinedCourseBoxes />}
+
+                    {shouldRenderCourseBoxes && <CourseBoxes />}
+
+                    {
+                        shouldRenderDashboardProps && <div><DashboardHome/></div>
+                    }
+                    {/* Your content goes here */}
+                </ContentContainer>
+            </Box>
+
+        </Box>
     );
 }
