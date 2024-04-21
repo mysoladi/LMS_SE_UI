@@ -28,6 +28,8 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { useEffect, useState, useCallback } from "react";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate, useLocation } from 'react-router-dom';
+import SearchComponent  from "../../pages/Search/Search";
+
 import axios from "axios";
 import { useCalendarState } from "@mui/x-date-pickers/internals";
 
@@ -108,7 +110,9 @@ export default function DashboardInstructor(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [activeMenu, setActiveMenu] = React.useState(0);
     const [showProfile, setShowProfile] = React.useState(false);
-    
+    const [searchTerm, setSearchTerm] = React.useState('');
+
+
 
 
     const handleMenu = (event) => {
@@ -131,6 +135,10 @@ export default function DashboardInstructor(props) {
     //   localStorage.clear();
     //   window.location.href = '/';
     // };
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
 
 
 
@@ -186,6 +194,8 @@ export default function DashboardInstructor(props) {
                     >
                         Dashboard
                     </Typography>
+                    <SearchComponent placeholder="Search…" onChange={handleSearchChange} />
+
                     <div sx={{ marginRight: "0", p: 0 }}>
                         <IconButton
                             size="large"
