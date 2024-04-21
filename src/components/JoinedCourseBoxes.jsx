@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
-const JoinedCourseBoxes = () => {
+const JoinedCourseBoxes = (courses) => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const [joinedCourses, setJoinedCourses] = useState([]);
   const [approvedCourses, setApprovedCourses] = useState([]); // State for approved courses
+  // const [displayCourses, setDisplayCourses] = useState([]);
   const user_id = localStorage.getItem('id');
 
   useEffect(() => {
@@ -43,6 +44,17 @@ const JoinedCourseBoxes = () => {
     fetchApprovedCourses(); // Fetch approved courses on component mount
   }, [user_id]);
 
+  const displayCourses = useMemo(() => {
+    console.log(courses);
+    if (courses.courses.length > 0) {
+      const courseIds = new Set(courses.courses.map(c => c.course_id));
+      console.log(courseIds);
+      return joinedCourses.filter(jc => courseIds.has(jc.course_id));
+    }
+    return joinedCourses;
+  }, [courses, joinedCourses]);
+
+
   const handleViewCourse = (courseId) => {
     console.log(joinedCourses);
     // Log the courseId to check its value
@@ -58,7 +70,7 @@ const JoinedCourseBoxes = () => {
     <div>
       <h2 className="text-2xl font-semibold mb-4">Joined Courses</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-        {joinedCourses.map((course) => (
+        {displayCourses.map((course) => (
           <div
             key={course.course_id}
             className="bg-white rounded-lg shadow-md p-4 cursor-pointer"

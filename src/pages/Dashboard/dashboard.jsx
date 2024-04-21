@@ -25,14 +25,23 @@ import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ChatIcon from "@mui/icons-material/Chat";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect,  useCallback } from "react";
 import { deepOrange, deepPurple } from "@mui/material/colors";
-import { useNavigate, useLocation, useHistory } from "react-router-dom";
 import ChatSend from "../../components/ChatSend";
 import ExtendedNavbar from "../../components/ExtendedNavbar";
 import CourseBoxes from "../../components/CourseBoxes";
 import JoinedCourseBoxes from "../../components/JoinedCourseBoxes";
 import DashboardHome from "../../pages/assets/Home";
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+import { alpha } from '@mui/material/styles';
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
+
+import SearchComponent  from "../../pages/Search/Search";
+import { Navigate } from 'react-router-dom';
 
 
 import SecondDrawer from "../../components/SecondDashboardDrawer";
@@ -40,6 +49,7 @@ import SecondDrawer from "../../components/SecondDashboardDrawer";
 
 import axios from "axios";
 import { useCalendarState } from "@mui/x-date-pickers/internals";
+import {debounce} from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -118,6 +128,7 @@ const ContentContainer = styled(Box)(({ theme }) => ({
 
 
 
+
 export default function Dashboard(props) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -125,7 +136,22 @@ export default function Dashboard(props) {
     const [activeMenu, setActiveMenu] = React.useState(0);
     const [showProfile, setShowProfile] = React.useState(false);
     const [isSecondDrawerOpen, setIsSecondDrawerOpen] = useState(false); // Initial state set to closed
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [courses, setCourses] = useState([]);
 
+    const handleLogout = async () => {
+        // Optional: API call to backend to invalidate the session
+        // const response = await fetch('/api/logout', { method: 'POST' });
+
+        // Clear user data from storage
+        localStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken');
+
+        // Update global state if using (e.g., Context API or Redux)
+
+        // Redirect to the login page
+        navigate('/login');
+    };
 
 
     const handleMenu = (event) => {
@@ -144,6 +170,30 @@ export default function Dashboard(props) {
         setIsSecondDrawerOpen(false);
     };
 
+    const handleSearchChange = useCallback(debounce((event) => {
+        setSearchTerm(event.target.value);
+        if (event.target.value.length > 2) { // Optionally, only search when there are 3 or more characters
+            fetchCourses(event.target.value);
+        } else {
+            setCourses([]); // Clear results if the input is cleared or less than 3 characters
+        }
+    },300),[]);
+
+    const fetchCourses = async (query) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:8081/course/search/?q=${encodeURIComponent(query)}`);
+            if (response.ok) {
+                const data = await response.json();
+                setCourses(data.courses);
+            } else {
+                throw new Error('Failed to fetch courses');
+            }
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+        }
+    };
+
+
 
 
     const handleSecondDrawerOpen = () => {
@@ -157,10 +207,7 @@ export default function Dashboard(props) {
     console.log('isSecondDrawerOpen:', isSecondDrawerOpen); // Add this line for debugging
 
 
-    const handleLogout = () => {
-        localStorage.clear();
-        navigate("/login");
-    };
+
 
     var userFullName = localStorage.getItem("username");
     var name = userFullName || "User";
@@ -209,20 +256,23 @@ export default function Dashboard(props) {
                 }}
 
             >
-                <Toolbar sx={{ paddingLeft: theme.spacing(2), display: "flex", justifyContent: "space-between" }}>
+                <Toolbar sx={{paddingLeft: theme.spacing(2), display: "flex", justifyContent: "space-between"}}>
                     {/* Left-aligned content */}
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
-                        style={{ cursor: "pointer" }}
+                        style={{cursor: "pointer"}}
                         onClick={() => handleselection("Dashboard")}
                         paddingLeft={"3rem"}
                     >
                         Dashboard
                     </Typography>
+                    <SearchComponent placeholder="Search…" onChange={handleSearchChange}/>
+
+
                     {/* Right-aligned content */}
-                    <div sx={{ display: "flex", alignItems: "center", p: 0 }}>
+                    <div sx={{display: "flex", alignItems: "center", p: 0}}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -230,9 +280,9 @@ export default function Dashboard(props) {
                             aria-haspopup="true"
                             onClick={handleMenu}
                             color="inherit"
-                            sx={{ marginRight: -2 }}
+                            sx={{marginRight: -2}}
                         >
-                            <AccountCircle />
+                            <AccountCircle/>
                         </IconButton>
 
                         {/* Menu component */}
@@ -262,7 +312,7 @@ export default function Dashboard(props) {
             </AppBar>
 
             <Drawer variant="permanent" open={open}>
-                <DrawerHeader sx={{ alignItems: "center", flexDirection: "column" }}>
+                <DrawerHeader sx={{alignItems: "center", flexDirection: "column"}}>
                     <Avatar
                         sx={{
                             bgcolor: deepOrange[100],
@@ -368,9 +418,9 @@ export default function Dashboard(props) {
                     }}
                 >
 
-                    {!shouldRenderHomeDashboard && shouldRenderHomeDashboardbool && !shouldRenderDashboardProps && <JoinedCourseBoxes />}
+                    {!shouldRenderHomeDashboard && shouldRenderHomeDashboardbool && !shouldRenderDashboardProps && <JoinedCourseBoxes courses={courses} />}
 
-                    {shouldRenderCourseBoxes && <CourseBoxes />}
+                    {shouldRenderCourseBoxes && <CourseBoxes searchCourses={courses} />}
 
                     {
                         shouldRenderDashboardProps && <div><DashboardHome/></div>
@@ -382,3 +432,4 @@ export default function Dashboard(props) {
         </Box>
     );
 }
+

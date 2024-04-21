@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
-const CourseBoxes = () => {
+const CourseBoxes = (searchCourses) => {
   const [courses, setCourses] = useState([]);
   const [user_id, setUserId] = useState("");
   const [joinedCourses, setJoinedCourses] = useState([]);
@@ -38,6 +38,16 @@ const CourseBoxes = () => {
     fetchJoinedCourses();
   }, [refresh]); // Refresh when the state of 'refresh' changes
 
+  const displayCourses = useMemo(() => {
+    console.log(searchCourses);
+    if (searchCourses.searchCourses.length > 0) {
+      const courseIds = new Set(searchCourses.searchCourses.map(c => c.course_id));
+      console.log(courseIds);
+      return courses.filter(jc => courseIds.has(jc.course_id));
+    }
+    return courses;
+  }, [searchCourses, courses]);
+
   const handleJoinCourse = async (courseId) => {
     try {
       await axios.put(
@@ -54,7 +64,7 @@ const CourseBoxes = () => {
   };
 
   // Filter out joined courses from the main courses list
-  const filteredCourses = courses.filter(
+  const filteredCourses = displayCourses.filter(
     (course) => !joinedCourses.some((joinedCourse) => joinedCourse.course_id === course.course_id)
   );
 
