@@ -139,13 +139,19 @@ export default function Dashboard(props) {
     const [searchTerm, setSearchTerm] = React.useState('');
     const [courses, setCourses] = useState([]);
 
-    const handleLogout = () => {
-        // API call to backend, clearing storage, etc...
+    const handleLogout = async () => {
+        // Optional: API call to backend to invalidate the session
+        // const response = await fetch('/api/logout', { method: 'POST' });
 
-        // Use navigate to redirect
-        // navigate('/login');
+        // Clear user data from storage
+        localStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken');
+
+        // Update global state if using (e.g., Context API or Redux)
+
+        // Redirect to the login page
+        navigate('/login');
     };
-
 
 
     const handleMenu = (event) => {
