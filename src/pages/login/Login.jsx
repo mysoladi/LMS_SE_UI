@@ -82,13 +82,13 @@ function Login() {
           fetchUserData(token);
 
           if (userRole == "Student") {
-            navigate("/dashboard");
+            navigate("/dashboard/");
           }
           else if (userRole == "Instructor"){
-            navigate("/dashboardInstructor");
+            navigate("/dashboardInstructor/");
           }
           else if (userRole == "Admin"){
-            navigate("/dashboardAdmin");
+            navigate("/dashboardAdmin/");
           }
           
         } 

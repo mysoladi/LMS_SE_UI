@@ -22,6 +22,8 @@ import AdminDashboard from "./pages/Dashboard/AdminDash";
 import Confirmation from "./pages/InstructorAddCourse/InstructorAddCourseConfirm";
 import AddAnnouncement from "./pages/InstructorAddCourse/AddAnnouncement";
 import AddAssignment from "./pages/InstructorAddCourse/AddAssignment";
+import CourseHomePage from "./components/CourseHome";
+import JoinedCourseBoxes from "./components/JoinedCourseBoxes";
 
 
 function App() {
@@ -45,12 +47,21 @@ function App() {
 
 
 
-          <Route path={'/dashboard/*'} element={<Dashboard>
-            <Routes>
-              <Route index element={<DashboardHome />}></Route>
-            </Routes>
-          </Dashboard>
-          } />
+          <Route
+              path="/dashboard/*"
+              element={
+                <Dashboard>
+                  <Routes>
+                    <Route index element={<JoinedCourseBoxes/>}/>
+                    <Route
+                        path={'/viewcourse'}
+                        element={<CourseHomePage />}
+                    />
+                  </Routes>
+                </Dashboard>
+              }
+          />
+          {/*<Route path="/dashboard/viewcourse/:courseId" render={(props) => <CourseHomePage {...props} />} />*/}
 
           <Route path='dashboardAdmin/*' element={<DashboardAdmin>
             <Routes>

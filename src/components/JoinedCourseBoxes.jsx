@@ -55,14 +55,14 @@ const JoinedCourseBoxes = (courses) => {
   }, [courses, joinedCourses]);
 
 
-  const handleViewCourse = (courseId) => {
+  const handleViewCourse = (courseId,course_name) => {
     console.log(joinedCourses);
     // Log the courseId to check its value
     console.log("Clicked courseId:", courseId);
     
     // Add your logic to navigate to the course details page or view the course
     console.log(`Viewing course with ID: ${courseId}`);
-    navigate(`/dashboard/viewcourse/${courseId}`); // Navigate to the course details page
+    navigate('/dashboard/viewcourse/',{state:{courseId:courseId,course_name:course_name}}); // Navigate to the course details page
   };
   
 
@@ -74,13 +74,13 @@ const JoinedCourseBoxes = (courses) => {
           <div
             key={course.course_id}
             className="bg-white rounded-lg shadow-md p-4 cursor-pointer"
-            onClick={() => handleViewCourse(course.course_id)}
+            onClick={() => handleViewCourse(course.course_id,course.course_name)}
           >
             <h3 className="text-lg font-semibold mb-2">{course.course_name}</h3>
             <p className="text-sm text-gray-500 mb-4">{course.course_description}</p>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => handleViewCourse(course.course_id)}
+              onClick={() => handleViewCourse(course.course_id,course.course_name)}
             >
               View Course
             </button>

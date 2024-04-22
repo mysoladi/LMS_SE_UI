@@ -131,6 +131,19 @@ export default function DashboardAdmin(props) {
     //   localStorage.clear();
     //   window.location.href = '/';
     // };
+    const handleLogout = async () => {
+        // Optional: API call to backend to invalidate the session
+        // const response = await fetch('/api/logout', { method: 'POST' });
+
+        // Clear user data from storage
+        localStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken');
+
+        // Update global state if using (e.g., Context API or Redux)
+
+        // Redirect to the login page
+        navigate('/login');
+    };
 
 
     var userFullName = localStorage.getItem("username");
@@ -216,7 +229,7 @@ export default function DashboardAdmin(props) {
                             >
                                 Profile
                             </MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
