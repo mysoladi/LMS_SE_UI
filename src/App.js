@@ -24,9 +24,9 @@ import AddAnnouncement from "./pages/InstructorAddCourse/AddAnnouncement";
 import AddAssignment from "./pages/InstructorAddCourse/AddAssignment";
 import CourseHomePage from "./components/CourseHome";
 import JoinedCourseBoxes from "./components/JoinedCourseBoxes";
+import AssignmentSubmission from './pages/Assignmentsubmission/assignmentsubmit'; // Importing AssignmentSubmission
+import Assignmentgrading from './pages/Assignmentgrading/filelist';
 
-
-function App() {
   return (
     <div className="App">
       <Router>
@@ -44,8 +44,9 @@ function App() {
           <Route path='dashboardAdmin/courseapprovalapprove' element={<CourseApprovalApproved />} />
           <Route path='dashboardAdmin/courseapprovalreject' element={<CourseApprovalRejected />} />
 
-
-
+          <Route path='dashboard/mycourses/AssignmentSubmission/assignment-submit' element={<AssignmentSubmission />} />  // New route for AssignmentSubmission
+          <Route path='dashboardInstructor/assignment/filelist' element={<Assignmentgrading/>} /> {/* File List component */}
+          
 
           <Route
               path="/dashboard/*"
@@ -84,7 +85,7 @@ function App() {
       </Router>
     </div>
   );
-}
+
 
 
 export default App;
