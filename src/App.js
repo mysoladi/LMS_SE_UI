@@ -27,6 +27,7 @@ import JoinedCourseBoxes from "./components/JoinedCourseBoxes";
 import AssignmentSubmission from './pages/Assignmentsubmission/assignmentsubmit'; // Importing AssignmentSubmission
 import Assignmentgrading from './pages/Assignmentgrading/filelist';
 
+function App() {
   return (
     <div className="App">
       <Router>
@@ -45,29 +46,29 @@ import Assignmentgrading from './pages/Assignmentgrading/filelist';
           <Route path='dashboardAdmin/courseapprovalreject' element={<CourseApprovalRejected />} />
 
           <Route path='dashboard/mycourses/AssignmentSubmission/assignment-submit' element={<AssignmentSubmission />} />  // New route for AssignmentSubmission
-          <Route path='dashboardInstructor/assignment/filelist' element={<Assignmentgrading/>} /> {/* File List component */}
-          
+          <Route path='dashboardInstructor/assignment/filelist' element={<Assignmentgrading />} /> {/* File List component */}
+
 
           <Route
-              path="/dashboard/*"
-              element={
-                <Dashboard>
-                  <Routes>
-                    <Route index element={<JoinedCourseBoxes/>}/>
-                    <Route
-                        path={'/viewcourse'}
-                        element={<CourseHomePage />}
-                    />
-                  </Routes>
-                </Dashboard>
-              }
+            path="/dashboard/*"
+            element={
+              <Dashboard>
+                <Routes>
+                  <Route index element={<JoinedCourseBoxes />} />
+                  <Route
+                    path={'/viewcourse'}
+                    element={<CourseHomePage />}
+                  />
+                </Routes>
+              </Dashboard>
+            }
           />
           {/*<Route path="/dashboard/viewcourse/:courseId" render={(props) => <CourseHomePage {...props} />} />*/}
 
           <Route path='dashboardAdmin/*' element={<DashboardAdmin>
             <Routes>
-              <Route index element={<AdminDashboard/>}></Route>
-              <Route path={'/adminpanel'} element = {<CoursesPage/>}></Route>
+              <Route index element={<AdminDashboard />}></Route>
+              <Route path={'/adminpanel'} element={<CoursesPage />}></Route>
             </Routes>
           </DashboardAdmin>
           } />
@@ -75,9 +76,9 @@ import Assignmentgrading from './pages/Assignmentgrading/filelist';
           <Route path='dashboardInstructor/*' element={<DashboardInstructor>
             <Routes>
               <Route index element={<DashboardHomeInstructor />} />
-              <Route path={'/add-announcement'} element={<AddAnnouncement/>}></Route>
-              <Route path={'/add-assignment'} element={<AddAssignment/>}></Route>
-              <Route path={'/confirmation'} element={<Confirmation/>}></Route>
+              <Route path={'/add-announcement'} element={<AddAnnouncement />}></Route>
+              <Route path={'/add-assignment'} element={<AddAssignment />}></Route>
+              <Route path={'/confirmation'} element={<Confirmation />}></Route>
             </Routes>
           </DashboardInstructor>
           } />
@@ -85,6 +86,7 @@ import Assignmentgrading from './pages/Assignmentgrading/filelist';
       </Router>
     </div>
   );
+}
 
 
 
