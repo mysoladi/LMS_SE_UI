@@ -35,6 +35,15 @@ function Row({ course,role }) {
             console.error('Error fetching announcements for course ID:', courseId, error);
         }
     };
+    const fetchAssignments = async (courseId) => {
+        try {
+            const url = `http://127.0.0.1:8000/assignment/?user_id=${user_id}&course_id=${courseId}`;
+            const response = await axios.get(url);
+            setAssignments(response.data);
+        } catch (error) {
+            console.error('Error fetching announcements for course ID:', courseId, error);
+        }
+    };
     const handleAddAnnouncement = () => {
         navigate('/dashboardInstructor/add-announcement', { state: { courseId: course.course_id } });
     };
@@ -44,13 +53,27 @@ function Row({ course,role }) {
         console.log('Add Assignment for Course ID:', course.course_id);
         // Navigate to add assignment page similar to announcements
     };
+    const handlePublishAssignment = async (assignment_id,courseId) => {
+        try {
+            const url = `http://127.0.0.1:8000/assignment/publish?user_id=${user_id}`;
+            const req = {course_id: course.course_id, assignment_id: assignment_id}
+            console.log(req);
+            const response = await axios.put(url, req);
+            setAssignments(response.data);
+        } catch (error) {
+            console.error('Error fetching announcements for course ID:', course.courseId, error);
+        }
+    }
 
     useEffect(() => {
         if (open) {
             // Calls fetchAnnouncements for the specific course when the row is expanded
             fetchAnnouncements(course.course_id);
+            fetchAssignments(course.course_id);
         }
     }, [open, course.course_id]);
+
+
 
     return (
         <>
@@ -94,15 +117,42 @@ function Row({ course,role }) {
                             <Typography variant="h6" gutterBottom component="div">
                                 Assignments
                             </Typography>
-                            {assignments.length > 0 ? (
-                                assignments.map((assignment) => (
-                                    <Typography key={assignment.id} paragraph>
-                                        {assignment.title}: {assignment.message}
-                                    </Typography>
-                                ))
-                            ) : (
-                                <Typography variant="h6" paragraph>No Assignments available for this course.</Typography>
+                            {assignments.length === 0 && (
+                                <Typography variant="body1" paragraph>
+                                    No assignments available for this course.
+                                </Typography>
                             )}
+                            {assignments.length>0 && assignments
+                                .filter((assignment) => !assignment.is_published)
+                                .map((assignment) => (
+                                    <div key={assignment.assignment_id}>
+                                        <Box sx={{marginBottom: 2, borderBottom: '1px solid #ccc', paddingBottom: 2}}>
+                                            <Typography variant="subtitle1"
+                                                        fontWeight="bold">{assignment.title}</Typography>
+                                            <Typography variant="body1">{assignment.description}</Typography>
+                                            <Typography variant="body2" color="text.secondary">Due Date: {assignment.due_date}</Typography>
+                                            <Button
+                                                onClick={() => handlePublishAssignment(assignment.assignment_id)}
+                                                variant="outlined"
+                                                color="primary"
+                                                size="small"
+                                                sx={{marginTop: 1}}
+                                            >
+                                                Publish
+                                            </Button>
+                                        </Box>
+                                    </div>
+                                ))}
+                            {/* Render published assignments */}
+                            {assignments.length>0 && assignments
+                                .filter((assignment) => assignment.is_published)
+                                .map((assignment) => (
+                                    <div key={assignment.assignment_id}>
+                                        <Typography variant="subtitle1">{assignment.title}</Typography>
+                                        <Typography variant="body1">{assignment.description}</Typography>
+                                        <Typography variant="body2" color="text.secondary">Due Date: {assignment.due_date}</Typography>
+                                    </div>
+                                ))}
                         </Box>
 
                     </Collapse>
@@ -120,7 +170,7 @@ function CoursesTable({role}) {
         const fetchCourses = async () => {
             const user_id = localStorage.getItem('id');
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/course/?user_id=${user_id}`);
+                const response = await axios.get(`https://course-management-service.onrender.com/course/?user_id=${user_id}`);
                 setCourses(response.data);
             } catch (error) {
                 console.error('Error fetching courses:', error);

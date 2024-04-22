@@ -28,6 +28,8 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { useEffect, useState, useCallback } from "react";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate, useLocation } from 'react-router-dom';
+import SearchComponent  from "../../pages/Search/Search";
+
 import axios from "axios";
 import { useCalendarState } from "@mui/x-date-pickers/internals";
 
@@ -108,7 +110,9 @@ export default function DashboardInstructor(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [activeMenu, setActiveMenu] = React.useState(0);
     const [showProfile, setShowProfile] = React.useState(false);
-    
+    const [searchTerm, setSearchTerm] = React.useState('');
+
+
 
 
     const handleMenu = (event) => {
@@ -131,6 +135,10 @@ export default function DashboardInstructor(props) {
     //   localStorage.clear();
     //   window.location.href = '/';
     // };
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
 
 
 
@@ -155,6 +163,19 @@ export default function DashboardInstructor(props) {
             navigate('/dashboardInstructor' + access_ele[text]);
         }
     }
+    const handleLogout = async () => {
+        // Optional: API call to backend to invalidate the session
+        // const response = await fetch('/api/logout', { method: 'POST' });
+
+        // Clear user data from storage
+        localStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken');
+
+        // Update global state if using (e.g., Context API or Redux)
+
+        // Redirect to the login page
+        navigate('/login');
+    };
     // "#113224 !important",
     return (
         <Box sx={{ display: "flex", justifyContent: 'left', p: 0 }}>
@@ -186,6 +207,8 @@ export default function DashboardInstructor(props) {
                     >
                         Dashboard
                     </Typography>
+                    <SearchComponent placeholder="Search…" onChange={handleSearchChange} />
+
                     <div sx={{ marginRight: "0", p: 0 }}>
                         <IconButton
                             size="large"
@@ -222,7 +245,7 @@ export default function DashboardInstructor(props) {
                             >
                                 Profile
                             </MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
