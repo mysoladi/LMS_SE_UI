@@ -33,7 +33,7 @@ const AssignmentSubmission = () => {
     const csrfToken = Cookies.get('csrftoken');
 
     try {
-      await axios.post('http://127.0.0.1:8000/fileuploads/', formData, {
+      await axios.post('https://course-management-service.onrender.com/fileuploads/', formData, {
         withCredentials: true,
       });
 
