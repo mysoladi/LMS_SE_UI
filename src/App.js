@@ -9,8 +9,8 @@ import Dashboard from './pages/Dashboard/dashboard';
 import DashboardAdmin from './pages/Dashboard/dashboardAdmin';
 import DashboardInstructor from './pages/Dashboard/dashboardInstructor';
 import DashboardHome from './pages/assets/Home';
-import DashboardHomeAdmin from './pages/assets/HomeAdmin'; // Adjust the path as per your project structure
-import DashboardHomeInstructor from './pages/assets/HomeInstructor'; // Adjust the path as per your project structure
+import DashboardHomeAdmin from './pages/assets/HomeAdmin';
+import DashboardHomeInstructor from './pages/assets/HomeInstructor';
 import AdminCourseApproval from './pages/AdminCourseApproval/CourseApproval';
 import CourseApprovalRejected from './pages/AdminCourseApproval/CourseApprovalRejected';
 import CourseApprovalApproved from './pages/AdminCourseApproval/CourseApprovalApprove';
@@ -22,6 +22,9 @@ import AdminDashboard from "./pages/Dashboard/AdminDash";
 import Confirmation from "./pages/InstructorAddCourse/InstructorAddCourseConfirm";
 import AddAnnouncement from "./pages/InstructorAddCourse/AddAnnouncement";
 import AddAssignment from "./pages/InstructorAddCourse/AddAssignment";
+import AssignmentSubmission from './pages/Assignmentsubmission/assignmentsubmit'; // Importing AssignmentSubmission
+import Assignmentgrading from './pages/Assignmentgrading/filelist';
+
 
 function App() {
   return (
@@ -35,15 +38,15 @@ function App() {
           <Route path="/resetpassword" element={<ChangePassword />} />
 
           <Route path="/courseformdemo" element={<CourseFormDemo />} />
-          <Route path='/dashboardInstructor/courseform/' element={<CourseForm />} /> {/* For adding a new course */}
-          <Route path='/courseform/:courseId' element={<CourseForm />} /> {/* For updating an existing course */}
+          <Route path='/dashboardInstructor/courseform/' element={<CourseForm />} />
+          <Route path='/courseform/:courseId' element={<CourseForm />} />
           <Route path='dashboardAdmin/courseapproval' element={<AdminCourseApproval />} />
           <Route path='dashboardAdmin/courseapprovalapprove' element={<CourseApprovalApproved />} />
           <Route path='dashboardAdmin/courseapprovalreject' element={<CourseApprovalRejected />} />
 
-
-
-
+          <Route path='dashboard/mycourses/AssignmentSubmission/assignment-submit' element={<AssignmentSubmission />} />  // New route for AssignmentSubmission
+          <Route path='dashboardInstructor/assignment/filelist' element={<Assignmentgrading/>} /> {/* File List component */}
+          
           <Route path={'/dashboard/*'} element={<Dashboard>
             <Routes>
               <Route index element={<DashboardHome />}></Route>
@@ -74,10 +77,4 @@ function App() {
   );
 }
 
-
 export default App;
-
-
-
-
-
