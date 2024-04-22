@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
-import { useLocation } from 'react-router-dom'; // Import useLocation from react-router-dom
+import {useLocation, useParams} from 'react-router-dom'; // Import useLocation from react-router-dom
 import CalendarStud from './CalendarStud';
 import AssignmentsTable from './AssignmentsTable';
 import AnnouncementsTable from './AnnouncementsTable';
@@ -8,6 +8,7 @@ import MyCourses from "../../components/MyCourses";
 
 export default function DashboardHome() {
   const location = useLocation(); // Get the current location pathname
+  const courseId = useParams();
 
   const courseTitle = localStorage.getItem("course_name");
   console.log(courseTitle);

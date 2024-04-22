@@ -163,6 +163,19 @@ export default function DashboardInstructor(props) {
             navigate('/dashboardInstructor' + access_ele[text]);
         }
     }
+    const handleLogout = async () => {
+        // Optional: API call to backend to invalidate the session
+        // const response = await fetch('/api/logout', { method: 'POST' });
+
+        // Clear user data from storage
+        localStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken');
+
+        // Update global state if using (e.g., Context API or Redux)
+
+        // Redirect to the login page
+        navigate('/login');
+    };
     // "#113224 !important",
     return (
         <Box sx={{ display: "flex", justifyContent: 'left', p: 0 }}>
@@ -232,7 +245,7 @@ export default function DashboardInstructor(props) {
                             >
                                 Profile
                             </MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>

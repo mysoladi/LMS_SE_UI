@@ -15,7 +15,8 @@ export default function AddAssignment() {
         course_id: location.state.courseId,
         title:'',
         description:'',
-        due_date:''
+        due_date:'',
+        file: null // New state to store the selected file
     });
 
     const handleChange = (e) => {
@@ -26,6 +27,11 @@ export default function AddAssignment() {
         // Format the date to YYYY-MM-DD using native JavaScript
         const formattedDate = newValue.toISOString().split('T')[0];
         setCourse((prev) => ({ ...prev, due_date: formattedDate }));
+    };
+
+    const handleFileChange = (e) => {
+        // Store the selected file in the state
+        setCourse((prev) => ({ ...prev, file: e.target.files[0] }));
     };
 
     const handleSubmit = async (e) => {
@@ -41,8 +47,19 @@ export default function AddAssignment() {
         }
 
         try {
-            const response = await axios.post('https://course-management-service.onrender.com/assignment/add', course, {
-                params: { user_id }, // Pass user_id and user_role as query parameters
+            // Create a new FormData object to send the file along with other data
+            const formData = new FormData();
+            // formData.append('file', course.file); // Append the file to the form data
+            formData.append('course_id', course.course_id);
+            formData.append('title', course.title);
+            formData.append('description', course.description);
+            formData.append('due_date', course.due_date);
+            formData.append('user_id', user_id);
+
+            const response = await axios.post(`http://127.0.0.1:8000/assignment/add?user_id=${user_id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' // Set content type as multipart/form-data for file upload
+                }
             });
             console.log('Announcement added successfully:', response.data);
             navigate('/dashboardInstructor/confirmation'); // Redirect to the course approval page or dashboard after submission
@@ -59,15 +76,6 @@ export default function AddAssignment() {
                     Add New Assignment
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
-                    {/*<TextField*/}
-                    {/*    margin="normal"*/}
-                    {/*    fullWidth*/}
-                    {/*    id="course_name"*/}
-                    {/*    label="Course Name"*/}
-                    {/*    name="course_name"*/}
-                    {/*    value={course.course_name}*/}
-                    {/*    onChange={handleChange}*/}
-                    {/*/>*/}
                     <TextField
                         margin="normal"
                         fullWidth
@@ -99,6 +107,8 @@ export default function AddAssignment() {
                             />
                         </DemoContainer>
                     </LocalizationProvider>
+                    {/* Add file input for uploading */}
+                    {/*<input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange} />*/}
                     <Button
                         type="submit"
                         fullWidth
