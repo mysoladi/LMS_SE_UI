@@ -96,7 +96,7 @@ const CourseHomePage = () => {
 
     const handleAssignmentClick = (assignment) => {
         console.log(assignment);
-        navigate('/');
+        navigate('/dashboard/mycourses/AssignmentSubmission/assignment-submit');
     }
     const handleChat = () => {
 

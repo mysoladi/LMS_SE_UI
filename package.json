@@ -23,7 +23,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^4.3.0",
     "axios": "^1.5.0",
-    "canvas": "^2.11.2",
     "dayjs": "^1.11.10",
     "django": "^1.0.0",
     "dompurify": "^3.0.11",
