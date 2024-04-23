@@ -28,7 +28,7 @@ function Row({ course,role }) {
     // This function fetches announcements for a specific course based on its course_id
     const fetchAnnouncements = async (courseId) => {
         try {
-            const url = `http://127.0.0.1:8000/announcement/?user_id=${user_id}&course_id=${courseId}`;
+            const url = `https://course-management-service.onrender.com/announcement/?user_id=${user_id}&course_id=${courseId}`;
             const response = await axios.get(url);
             setAnnouncements(response.data);
         } catch (error) {
@@ -37,7 +37,7 @@ function Row({ course,role }) {
     };
     const fetchAssignments = async (courseId) => {
         try {
-            const url = `http://127.0.0.1:8000/assignment/?user_id=${user_id}&course_id=${courseId}`;
+            const url = `https://course-management-service.onrender.com/assignment/?user_id=${user_id}&course_id=${courseId}`;
             const response = await axios.get(url);
             setAssignments(response.data);
         } catch (error) {
@@ -55,7 +55,7 @@ function Row({ course,role }) {
     };
     const handlePublishAssignment = async (assignment_id,courseId) => {
         try {
-            const url = `http://127.0.0.1:8000/assignment/publish?user_id=${user_id}`;
+            const url = `https://course-management-service.onrender.com/assignment/publish?user_id=${user_id}`;
             const req = {course_id: course.course_id, assignment_id: assignment_id}
             console.log(req);
             const response = await axios.put(url, req);

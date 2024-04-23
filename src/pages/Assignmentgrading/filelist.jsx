@@ -27,7 +27,7 @@ const FileList = () => {
             alert("Invalid file or missing file ID.");
             return; // Exit if file ID is undefined or file data is corrupted
         }
-        const url = `http://127.0.0.1:8000/update-grade/${file.id}/`;
+        const url = `https://course-management-service.onrender.com/update-grade/${file.id}/`;
         const payload = { grade: grades[fileIndex] };
     
         axios.post(url, payload)
@@ -58,7 +58,7 @@ const FileList = () => {
                 {files.map((file, index) => (
                     <li key={file.id || `fallback-${index}`} style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span style={{ flex: 1 }} onClick={() => setSelectedFile(`http://127.0.0.1:8000${file.url}`)}>{file.name}</span>
+                            <span style={{ flex: 1 }} onClick={() => setSelectedFile(`https://course-management-service.onrender.com${file.url}`)}>{file.name}</span>
                             <input type="number" value={grades[index]} onChange={(e) => handleGradeChange(index, e.target.value)} placeholder="Enter grade" style={{ marginRight: '10px', padding: '5px', border: '1px solid #ccc', borderRadius: '5px', width: '100px' }} />
                             <button onClick={(e) => { e.stopPropagation(); submitGrade(index); }} style={{ backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}>
                                 Submit Grade
