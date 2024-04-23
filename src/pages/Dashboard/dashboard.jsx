@@ -280,6 +280,8 @@ export default function Dashboard(props) {
                     >
                         Dashboard
                     </Typography>
+                    <SearchComponent placeholder="Search…" onChange={handleSearchChange} />
+
                     <div sx={{ marginRight: "0", p: 0 }}>
                         <IconButton
                             size="large"
