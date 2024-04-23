@@ -56,7 +56,7 @@ export default function AddAssignment() {
             formData.append('due_date', course.due_date);
             formData.append('user_id', user_id);
 
-            const response = await axios.post(`http://127.0.0.1:8000/assignment/add?user_id=${user_id}`, formData, {
+            const response = await axios.post(`https://course-management-service.onrender.com/assignment/add?user_id=${user_id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data' // Set content type as multipart/form-data for file upload
                 }

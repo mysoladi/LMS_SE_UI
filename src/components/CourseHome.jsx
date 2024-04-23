@@ -70,8 +70,8 @@ const CourseHomePage = () => {
     useEffect(() => {
         const fetchCourseDetails = async () => {
             try {
-                const assignmentsResponse = await axios.get(`http://127.0.0.1:8000/assignment/?user_id=${user_id}&course_id=${courseId}`);
-                const announcementsResponse = await axios.get(`http://127.0.0.1:8000/announcement/?user_id=${user_id}&course_id=${courseId}`);
+                const assignmentsResponse = await axios.get(`https://course-management-service.onrender.com/assignment/?user_id=${user_id}&course_id=${courseId}`);
+                const announcementsResponse = await axios.get(`https://course-management-service.onrender.com/announcement/?user_id=${user_id}&course_id=${courseId}`);
 
                 setAssignments(assignmentsResponse.data);
                 setAnnouncements(announcementsResponse.data);

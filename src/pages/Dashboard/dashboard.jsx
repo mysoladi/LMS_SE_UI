@@ -182,7 +182,7 @@ export default function Dashboard(props) {
 
     const fetchCourses = async (query) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8081/course/search/?q=${encodeURIComponent(query)}`);
+            const response = await fetch(`https://course-management-service.onrender.com/course/search/?q=${encodeURIComponent(query)}`);
             if (response.ok) {
                 const data = await response.json();
                 setCourses(data.courses);
